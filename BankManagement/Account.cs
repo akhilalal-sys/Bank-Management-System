@@ -24,17 +24,54 @@ namespace BankManagement
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection(@"Data Source=AALAL-PC;Initial Catalog=BankDB;Integrated Security=True;Encrypt=False");
-            con.Open();
-            SqlCommand cnn = new SqlCommand("insert into accounts values(@account_id,@account_type,@balance,@date_opened,@customer_name)", con);
-            cnn.Parameters.AddWithValue("Account_ID", int.Parse(textBox5.Text));
-            cnn.Parameters.AddWithValue("@Account_Type", textBox2.Text);
-            cnn.Parameters.AddWithValue("@Balance", textBox3.Text);
-            cnn.Parameters.AddWithValue("@Date_Opened", dateTimePicker1.Value);
-            cnn.Parameters.AddWithValue("@Customer_Name", textBox4.Text);
-            cnn.ExecuteNonQuery();
-            con.Close();
-            MessageBox.Show("Record Saved Successfullly!");
+            try
+            {
+                SqlConnection con = new SqlConnection(@"Data Source=AALAL-PC;Initial Catalog=BankDB;Integrated Security=True;Encrypt=False");
+
+                con.Open();
+
+                // UPDATE
+                if (textBox5.Text != "")
+                {
+                    SqlCommand cnn = new SqlCommand(
+                        "update accounts set Account_Type=@Account_Type, Balance=@Balance, Date_Opened=@Date_Opened, Customer_ID=@Customer_ID where Account_ID=@Account_ID",
+                        con);
+
+                    cnn.Parameters.AddWithValue("@Account_ID", int.Parse(textBox5.Text));
+                    cnn.Parameters.AddWithValue("@Account_Type", textBox2.Text);
+                    cnn.Parameters.AddWithValue("@Balance", textBox3.Text);
+                    cnn.Parameters.AddWithValue("@Date_Opened", dateTimePicker1.Value);
+                    cnn.Parameters.AddWithValue("@Customer_ID", int.Parse(textBox4.Text));
+
+                    cnn.ExecuteNonQuery();
+
+                    MessageBox.Show("Record Updated Successfully!");
+                }
+
+                // INSERT
+                else
+                {
+                    SqlCommand cnn = new SqlCommand(
+                        "insert into accounts(Account_Type,Balance,Date_Opened,Customer_ID) values(@Account_Type,@Balance,@Date_Opened,@Customer_ID)",
+                        con);
+
+                    cnn.Parameters.AddWithValue("@Account_Type", textBox2.Text);
+                    cnn.Parameters.AddWithValue("@Balance", textBox3.Text);
+                    cnn.Parameters.AddWithValue("@Date_Opened", dateTimePicker1.Value);
+                    cnn.Parameters.AddWithValue("@Customer_ID", int.Parse(textBox4.Text));
+
+                    cnn.ExecuteNonQuery();
+
+                    MessageBox.Show("Record Saved Successfully!");
+                }
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
+
 
         }
 
@@ -62,20 +99,7 @@ namespace BankManagement
             dataGridView1.DataSource = table;
         }
 
-        private void btnUpdate_Click(object sender, EventArgs e)
-        {
-            SqlConnection con = new SqlConnection(@"Data Source=AALAL-PC;Initial Catalog=BankDB;Integrated Security=True;Encrypt=False");
-            con.Open();
-            SqlCommand cnn = new SqlCommand("update accounts set account_type=@account_type,balance=@balance,date_opened=@date_opened,customer_name=@customer_name where account_id=@account_id", con);
-            cnn.Parameters.AddWithValue("Account_ID", int.Parse(textBox5.Text));
-            cnn.Parameters.AddWithValue("@Account_Type", textBox2.Text);
-            cnn.Parameters.AddWithValue("@Balance", textBox3.Text);
-            cnn.Parameters.AddWithValue("@Date_Opened", dateTimePicker1.Value);
-            cnn.Parameters.AddWithValue("@Customer_Name", textBox4.Text);
-            cnn.ExecuteNonQuery();
-            con.Close();
-            MessageBox.Show("Record Updated Successfullly!");
-        }
+
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
@@ -113,13 +137,53 @@ namespace BankManagement
         {
             SqlConnection con = new SqlConnection(@"Data Source=AALAL-PC;Initial Catalog=BankDB;Integrated Security=True;Encrypt=False");
             con.Open();
-            SqlCommand cnn = new SqlCommand("select * from accounts where customer_name=@customer_name", con);
-            cnn.Parameters.AddWithValue("@Customer_Name", textBox1.Text);
+            SqlCommand cnn = new SqlCommand("select * from accounts where customer_ID=@customer_ID", con);
+            cnn.Parameters.AddWithValue("@Customer_ID", int.Parse(textBox1.Text));
             SqlDataAdapter da = new SqlDataAdapter(cnn);
             DataTable table = new DataTable();
             da.Fill(table);
             con.Close();
             dataGridView1.DataSource = table;
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+
+                textBox5.Text = row.Cells["Account_ID"].Value.ToString().PadLeft(3, '0'); ;
+                textBox2.Text = row.Cells["Account_Type"].Value.ToString();
+                textBox3.Text = row.Cells["Balance"].Value.ToString();
+
+                dateTimePicker1.Value = Convert.ToDateTime(row.Cells["Date_Opened"].Value);
+
+                textBox4.Text = row.Cells["Customer_ID"].Value.ToString();
+            }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            textBox1.Clear();
+            textBox2.Clear();
+            textBox3.Clear();
+            textBox4.Clear();
+            textBox5.Clear();
         }
     }
 }

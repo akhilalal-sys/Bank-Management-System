@@ -52,7 +52,7 @@
             flowLayoutPanel1.Dock = DockStyle.Top;
             flowLayoutPanel1.Location = new Point(0, 0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(1139, 64);
+            flowLayoutPanel1.Size = new Size(1638, 64);
             flowLayoutPanel1.TabIndex = 0;
             // 
             // label1
@@ -71,7 +71,7 @@
             panel1.BackColor = Color.White;
             panel1.Controls.Add(lblCount1);
             panel1.Controls.Add(label2);
-            panel1.Location = new Point(82, 133);
+            panel1.Location = new Point(227, 346);
             panel1.Name = "panel1";
             panel1.Size = new Size(301, 238);
             panel1.TabIndex = 1;
@@ -101,7 +101,7 @@
             panel2.BackColor = Color.White;
             panel2.Controls.Add(lblCount2);
             panel2.Controls.Add(label4);
-            panel2.Location = new Point(411, 133);
+            panel2.Location = new Point(666, 346);
             panel2.Name = "panel2";
             panel2.Size = new Size(301, 238);
             panel2.TabIndex = 2;
@@ -131,7 +131,7 @@
             panel3.BackColor = Color.White;
             panel3.Controls.Add(lblCount3);
             panel3.Controls.Add(label6);
-            panel3.Location = new Point(740, 133);
+            panel3.Location = new Point(1086, 346);
             panel3.Name = "panel3";
             panel3.Size = new Size(301, 238);
             panel3.TabIndex = 3;
@@ -161,13 +161,14 @@
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(192, 255, 192);
-            ClientSize = new Size(1139, 567);
+            ClientSize = new Size(1638, 834);
             Controls.Add(panel3);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(flowLayoutPanel1);
+            Location = new Point(270, 120);
             Name = "Dashboard";
-            StartPosition = FormStartPosition.CenterScreen;
+            StartPosition = FormStartPosition.Manual;
             Text = "Dashboard";
             Load += Dashboard_Load;
             flowLayoutPanel1.ResumeLayout(false);

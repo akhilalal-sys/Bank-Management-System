@@ -29,16 +29,45 @@ namespace BankManagement
         private void btnSave_Click(object sender, EventArgs e)
         {
             SqlConnection con = new SqlConnection(@"Data Source=AALAL-PC;Initial Catalog=BankDB;Integrated Security=True;Encrypt=False");
+
             con.Open();
-            SqlCommand cnn = new SqlCommand("insert into customers values(@customer_id,@customer_name,@phone,@email,@address)", con);
-            cnn.Parameters.AddWithValue("@Customer_ID", int.Parse(textBox1.Text));
-            cnn.Parameters.AddWithValue("@Customer_Name", textBox2.Text);
-            cnn.Parameters.AddWithValue("@Phone", textBox3.Text);
-            cnn.Parameters.AddWithValue("@Email", textBox4.Text);
-            cnn.Parameters.AddWithValue("@Address", textBox5.Text);
-            cnn.ExecuteNonQuery();
+
+            // UPDATE
+            if (textBox1.Text != "")
+            {
+                SqlCommand cmd = new SqlCommand(
+                    "update customers set customer_name=@customer_name, phone=@phone, email=@email, address=@address where customer_id=@customer_id",
+                    con);
+
+                cmd.Parameters.AddWithValue("@customer_id", textBox1.Text);
+                cmd.Parameters.AddWithValue("@customer_name", textBox2.Text);
+                cmd.Parameters.AddWithValue("@phone", textBox3.Text);
+                cmd.Parameters.AddWithValue("@email", textBox5.Text);
+                cmd.Parameters.AddWithValue("@address", textBox4.Text);
+
+                cmd.ExecuteNonQuery();
+
+                MessageBox.Show("Customer Updated Successfully");
+            }
+
+            // INSERT
+            else
+            {
+                SqlCommand cmd = new SqlCommand(
+                    "insert into customers(customer_name,phone,email,address) values(@customer_name,@phone,@email,@address)",
+                    con);
+
+                cmd.Parameters.AddWithValue("@customer_name", textBox2.Text);
+                cmd.Parameters.AddWithValue("@phone", textBox3.Text);
+                cmd.Parameters.AddWithValue("@email", textBox5.Text);
+                cmd.Parameters.AddWithValue("@address", textBox4.Text);
+
+                cmd.ExecuteNonQuery();
+
+                MessageBox.Show("Customer Saved Successfully");
+            }
+
             con.Close();
-            MessageBox.Show("Record Saved Successfullly!");
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -52,20 +81,7 @@ namespace BankManagement
             dataGridView1.DataSource = table;
         }
 
-        private void btnUpdate_Click(object sender, EventArgs e)
-        {
-            SqlConnection con = new SqlConnection(@"Data Source=AALAL-PC;Initial Catalog=BankDB;Integrated Security=True;Encrypt=False");
-            con.Open();
-            SqlCommand cnn = new SqlCommand("update customers set customer_name=@customer_name,phone=@phone,email=@email,address=@address where customer_id=@customer_id", con);
-            cnn.Parameters.AddWithValue("@Customer_ID", int.Parse(textBox1.Text));
-            cnn.Parameters.AddWithValue("@Customer_Name", textBox2.Text);
-            cnn.Parameters.AddWithValue("@Phone", textBox3.Text);
-            cnn.Parameters.AddWithValue("@Email", textBox4.Text);
-            cnn.Parameters.AddWithValue("@Address", textBox5.Text);
-            cnn.ExecuteNonQuery();
-            con.Close();
-            MessageBox.Show("Record Updated Successfullly!");
-        }
+
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
@@ -111,6 +127,59 @@ namespace BankManagement
             da.Fill(table);
             dataGridView1.DataSource = table;
 
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+
+                textBox1.Text = row.Cells["Customer_ID"].Value.ToString();
+                textBox2.Text = row.Cells["Customer_Name"].Value.ToString();
+                textBox3.Text = row.Cells["Phone"].Value.ToString();
+                textBox5.Text = row.Cells["Email"].Value.ToString();
+                textBox4.Text = row.Cells["Address"].Value.ToString();
+            }
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = "";
+            textBox2.Text = "";
+            textBox3.Text = "";
+            textBox5.Text = "";
+            textBox4.Text = "";
         }
     }
 }

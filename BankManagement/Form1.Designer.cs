@@ -84,6 +84,7 @@
             txtUsername.Name = "txtUsername";
             txtUsername.Size = new Size(269, 34);
             txtUsername.TabIndex = 3;
+            txtUsername.TextChanged += txtUsername_TextChanged;
             // 
             // label3
             // 

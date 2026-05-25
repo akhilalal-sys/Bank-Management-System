@@ -32,17 +32,86 @@ namespace BankManagement
         private void btnSave_Click(object sender, EventArgs e)
         {
             SqlConnection con = new SqlConnection(@"Data Source=AALAL-PC;Initial Catalog=BankDB;Integrated Security=True;Encrypt=False");
-            con.Open();
-            SqlCommand cnn = new SqlCommand("insert into transactions values(@tid,@transaction_type,@amount,@transaction_date,@account_id)", con);
-            cnn.Parameters.AddWithValue("TID", int.Parse(textBox5.Text));
-            cnn.Parameters.AddWithValue("@Transaction_Type", textBox2.Text);
-            cnn.Parameters.AddWithValue("@Amount", int.Parse(textBox3.Text));
-            cnn.Parameters.AddWithValue("@Transaction_Date", dateTimePicker2.Value);
-            cnn.Parameters.AddWithValue("@Account_Id", int.Parse(textBox4.Text));
-            cnn.ExecuteNonQuery();
-            con.Close();
-            MessageBox.Show("Record Saved Successfullly!");
 
+            try
+            {
+                con.Open();
+
+                int accountId = int.Parse(textBox4.Text);
+                int amount = int.Parse(textBox3.Text);
+
+                // GET CURRENT BALANCE
+                SqlCommand getBalance = new SqlCommand(
+                    "select Balance from accounts where Account_ID=@Account_ID", con);
+
+                getBalance.Parameters.AddWithValue("@Account_ID", accountId);
+
+                int currentBalance = Convert.ToInt32(getBalance.ExecuteScalar());
+
+                int newBalance = currentBalance;
+
+                // DEPOSIT
+                if (comboBox1.Text == "Deposit")
+                {
+                    newBalance = currentBalance + amount;
+                }
+
+                // WITHDRAW
+                else if (comboBox1.Text == "Withdraw")
+                {
+                    if (amount > currentBalance)
+                    {
+                        MessageBox.Show("Insufficient Balance!");
+                        return;
+                    }
+
+                    newBalance = currentBalance - amount;
+                }
+
+                // UPDATE EXISTING TRANSACTION
+                
+
+                
+                    SqlCommand insertTransaction = new SqlCommand(
+                        "insert into transactions(Transaction_Type,Amount,Transaction_Date,Account_Id) values(@type,@amount,@date,@accountid)",
+                        con);
+
+                    insertTransaction.Parameters.AddWithValue("@type", comboBox1.Text);
+                    insertTransaction.Parameters.AddWithValue("@amount", amount);
+                    insertTransaction.Parameters.AddWithValue("@date", dateTimePicker2.Value);
+                    insertTransaction.Parameters.AddWithValue("@accountid", accountId);
+
+                    insertTransaction.ExecuteNonQuery();
+
+                    MessageBox.Show("Transaction Saved Successfully!");
+                
+
+                // UPDATE ACCOUNT BALANCE
+                SqlCommand updateBalance = new SqlCommand(
+                    "update accounts set Balance=@Balance where Account_ID=@Account_ID", con);
+
+                updateBalance.Parameters.AddWithValue("@Balance", newBalance);
+                updateBalance.Parameters.AddWithValue("@Account_ID", accountId);
+
+                updateBalance.ExecuteNonQuery();
+
+                // CLEAR FIELDS
+                textBox5.Clear();
+                textBox3.Clear();
+                textBox4.Clear();
+
+                comboBox1.SelectedIndex = -1;
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            finally
+            {
+                con.Close();
+            }
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -56,20 +125,7 @@ namespace BankManagement
             dataGridView1.DataSource = table;
         }
 
-        private void btnUpdate_Click(object sender, EventArgs e)
-        {
-            SqlConnection con = new SqlConnection(@"Data Source=AALAL-PC;Initial Catalog=BankDB;Integrated Security=True;Encrypt=False");
-            con.Open();
-            SqlCommand cnn = new SqlCommand("update transactions set transaction_type=@transaction_type,amount=@amount,transaction_date=@transaction_date,account_id=@account_id where tid=@tid", con);
-            cnn.Parameters.AddWithValue("TID", int.Parse(textBox5.Text));
-            cnn.Parameters.AddWithValue("@Transaction_Type", textBox2.Text);
-            cnn.Parameters.AddWithValue("@Amount", int.Parse(textBox3.Text));
-            cnn.Parameters.AddWithValue("@Transaction_Date", dateTimePicker2.Value);
-            cnn.Parameters.AddWithValue("@Account_Id", int.Parse(textBox4.Text));
-            cnn.ExecuteNonQuery();
-            con.Close();
-            MessageBox.Show("Record Updated Successfullly!");
-        }
+
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
@@ -96,6 +152,30 @@ namespace BankManagement
             DataTable table = new DataTable();
             da.Fill(table);
             dataGridView1.DataSource = table;
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+
+                textBox5.Text = row.Cells["TID"].Value.ToString();
+
+                comboBox1.Text = row.Cells["Transaction_Type"].Value.ToString();
+
+                textBox3.Text = row.Cells["Amount"].Value.ToString();
+
+                dateTimePicker2.Value =
+                    Convert.ToDateTime(row.Cells["Transaction_Date"].Value);
+
+                textBox4.Text = row.Cells["Account_Id"].Value.ToString();
+            }
         }
     }
 }
