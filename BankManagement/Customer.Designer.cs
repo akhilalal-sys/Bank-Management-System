@@ -43,13 +43,24 @@
             btnAdd = new Button();
             btnDelete = new Button();
             panel1 = new Panel();
+            btnReactivate = new Button();
             btnClear = new Button();
+            label10 = new Label();
+            label9 = new Label();
+            label8 = new Label();
+            label7 = new Label();
             dataGridView1 = new DataGridView();
-            flowLayoutPanel1 = new FlowLayoutPanel();
-            label1 = new Label();
+            label11 = new Label();
+            panel2 = new Panel();
+            panel3 = new Panel();
+            comboBoxStatus = new ComboBox();
+            btnSearch = new Button();
+            textBoxSearch = new TextBox();
+            comboBoxSearch = new ComboBox();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
-            flowLayoutPanel1.SuspendLayout();
+            panel2.SuspendLayout();
+            panel3.SuspendLayout();
             SuspendLayout();
             // 
             // sqlCommand1
@@ -98,7 +109,7 @@
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             label5.ForeColor = SystemColors.ActiveCaptionText;
-            label5.Location = new Point(666, 60);
+            label5.Location = new Point(657, 60);
             label5.Name = "label5";
             label5.Size = new Size(63, 28);
             label5.TabIndex = 3;
@@ -162,9 +173,9 @@
             btnSave.BackColor = SystemColors.GradientActiveCaption;
             btnSave.Font = new Font("Segoe UI Black", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSave.ForeColor = Color.Black;
-            btnSave.Location = new Point(1338, 13);
+            btnSave.Location = new Point(1356, 2);
             btnSave.Name = "btnSave";
-            btnSave.Size = new Size(104, 44);
+            btnSave.Size = new Size(141, 44);
             btnSave.TabIndex = 10;
             btnSave.Text = "Save";
             btnSave.UseVisualStyleBackColor = false;
@@ -175,11 +186,11 @@
             btnAdd.BackColor = SystemColors.GradientActiveCaption;
             btnAdd.Font = new Font("Segoe UI Black", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnAdd.ForeColor = Color.Black;
-            btnAdd.Location = new Point(1338, 82);
+            btnAdd.Location = new Point(1356, 9);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(104, 44);
+            btnAdd.Size = new Size(141, 44);
             btnAdd.TabIndex = 11;
-            btnAdd.Text = "Refresh";
+            btnAdd.Text = "Reload";
             btnAdd.UseVisualStyleBackColor = false;
             btnAdd.Click += btnAdd_Click;
             // 
@@ -188,19 +199,23 @@
             btnDelete.BackColor = SystemColors.GradientActiveCaption;
             btnDelete.Font = new Font("Segoe UI Black", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDelete.ForeColor = Color.Black;
-            btnDelete.Location = new Point(1458, 82);
+            btnDelete.Location = new Point(1356, 54);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(104, 44);
+            btnDelete.Size = new Size(141, 44);
             btnDelete.TabIndex = 13;
-            btnDelete.Text = "Delete";
+            btnDelete.Text = "Deactivate";
             btnDelete.UseVisualStyleBackColor = false;
             btnDelete.Click += btnDelete_Click;
             // 
             // panel1
             // 
+            panel1.Controls.Add(btnReactivate);
             panel1.Controls.Add(btnClear);
+            panel1.Controls.Add(label10);
+            panel1.Controls.Add(label9);
+            panel1.Controls.Add(label8);
+            panel1.Controls.Add(label7);
             panel1.Controls.Add(btnDelete);
-            panel1.Controls.Add(btnAdd);
             panel1.Controls.Add(btnSave);
             panel1.Controls.Add(textBox5);
             panel1.Controls.Add(textBox4);
@@ -215,57 +230,164 @@
             panel1.ForeColor = Color.YellowGreen;
             panel1.Location = new Point(12, 82);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1588, 145);
+            panel1.Size = new Size(1614, 150);
             panel1.TabIndex = 1;
+            // 
+            // btnReactivate
+            // 
+            btnReactivate.BackColor = SystemColors.GradientActiveCaption;
+            btnReactivate.Font = new Font("Segoe UI Black", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnReactivate.ForeColor = Color.Black;
+            btnReactivate.Location = new Point(1356, 104);
+            btnReactivate.Name = "btnReactivate";
+            btnReactivate.Size = new Size(141, 44);
+            btnReactivate.TabIndex = 20;
+            btnReactivate.Text = "Reactivate";
+            btnReactivate.UseVisualStyleBackColor = false;
+            btnReactivate.Click += btnReactivate_Click;
             // 
             // btnClear
             // 
             btnClear.BackColor = SystemColors.GradientActiveCaption;
             btnClear.Font = new Font("Segoe UI Black", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnClear.ForeColor = Color.Black;
-            btnClear.Location = new Point(1458, 13);
+            btnClear.Location = new Point(1101, 103);
             btnClear.Name = "btnClear";
-            btnClear.Size = new Size(104, 44);
-            btnClear.TabIndex = 14;
+            btnClear.Size = new Size(141, 44);
+            btnClear.TabIndex = 19;
             btnClear.Text = "Clear";
             btnClear.UseVisualStyleBackColor = false;
             btnClear.Click += btnClear_Click;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.ForeColor = Color.Red;
+            label10.Location = new Point(75, 54);
+            label10.Name = "label10";
+            label10.Size = new Size(20, 25);
+            label10.TabIndex = 18;
+            label10.Text = "*";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.ForeColor = Color.Red;
+            label9.Location = new Point(812, 10);
+            label9.Name = "label9";
+            label9.Size = new Size(20, 25);
+            label9.TabIndex = 17;
+            label9.Text = "*";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.ForeColor = Color.Red;
+            label8.Location = new Point(716, 57);
+            label8.Name = "label8";
+            label8.Size = new Size(20, 25);
+            label8.TabIndex = 16;
+            label8.Text = "*";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.ForeColor = Color.Red;
+            label7.Location = new Point(87, 98);
+            label7.Name = "label7";
+            label7.Size = new Size(20, 25);
+            label7.TabIndex = 15;
+            label7.Text = "*";
             // 
             // dataGridView1
             // 
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(12, 233);
+            dataGridView1.Location = new Point(12, 301);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 62;
-            dataGridView1.Size = new Size(1588, 589);
+            dataGridView1.Size = new Size(1614, 521);
             dataGridView1.TabIndex = 2;
             dataGridView1.CellClick += dataGridView1_CellClick;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
-            // flowLayoutPanel1
+            // label11
             // 
-            flowLayoutPanel1.BackColor = Color.DimGray;
-            flowLayoutPanel1.Controls.Add(label1);
-            flowLayoutPanel1.Dock = DockStyle.Top;
-            flowLayoutPanel1.Location = new Point(0, 0);
-            flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(1638, 51);
-            flowLayoutPanel1.TabIndex = 4;
+            label11.Anchor = AnchorStyles.None;
+            label11.Font = new Font("Segoe UI Black", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label11.ForeColor = Color.White;
+            label11.Location = new Point(683, 9);
+            label11.Name = "label11";
+            label11.Size = new Size(209, 57);
+            label11.TabIndex = 21;
+            label11.Text = "Customers";
             // 
-            // label1
+            // panel2
             // 
-            label1.Anchor = AnchorStyles.None;
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.White;
-            label1.Location = new Point(3, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(178, 45);
-            label1.TabIndex = 0;
-            label1.Text = "Customers";
-            label1.TextAlign = ContentAlignment.TopCenter;
-            label1.Click += label1_Click;
+            panel2.BackColor = Color.Gray;
+            panel2.Controls.Add(label11);
+            panel2.Dock = DockStyle.Top;
+            panel2.Location = new Point(0, 0);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(1638, 76);
+            panel2.TabIndex = 3;
+            // 
+            // panel3
+            // 
+            panel3.BackColor = Color.FromArgb(255, 224, 192);
+            panel3.Controls.Add(comboBoxStatus);
+            panel3.Controls.Add(btnSearch);
+            panel3.Controls.Add(textBoxSearch);
+            panel3.Controls.Add(comboBoxSearch);
+            panel3.Controls.Add(btnAdd);
+            panel3.Location = new Point(12, 236);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(1614, 59);
+            panel3.TabIndex = 4;
+            panel3.Paint += panel3_Paint;
+            // 
+            // comboBoxStatus
+            // 
+            comboBoxStatus.FormattingEnabled = true;
+            comboBoxStatus.Items.AddRange(new object[] { "Active", "Inactive", "All" });
+            comboBoxStatus.Location = new Point(1119, 14);
+            comboBoxStatus.Name = "comboBoxStatus";
+            comboBoxStatus.Size = new Size(186, 33);
+            comboBoxStatus.TabIndex = 12;
+            comboBoxStatus.SelectedIndexChanged += comboBoxStatus_SelectedIndexChanged;
+            // 
+            // btnSearch
+            // 
+            btnSearch.BackColor = Color.FromArgb(224, 224, 224);
+            btnSearch.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnSearch.Location = new Point(692, 9);
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new Size(248, 42);
+            btnSearch.TabIndex = 3;
+            btnSearch.Text = "Search";
+            btnSearch.UseVisualStyleBackColor = false;
+            btnSearch.Click += btnSearch_Click;
+            // 
+            // textBoxSearch
+            // 
+            textBoxSearch.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textBoxSearch.Location = new Point(251, 14);
+            textBoxSearch.Name = "textBoxSearch";
+            textBoxSearch.Size = new Size(426, 34);
+            textBoxSearch.TabIndex = 2;
+            textBoxSearch.TextChanged += textBox6_TextChanged;
+            textBoxSearch.Enter += textBoxSearch_Enter;
+            textBoxSearch.Leave += textBoxSearch_Leave;
+            // 
+            // comboBoxSearch
+            // 
+            comboBoxSearch.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxSearch.FormattingEnabled = true;
+            comboBoxSearch.Items.AddRange(new object[] { "Select Search Type", "Customer ID", "Customer Name", "Phone", "Email" });
+            comboBoxSearch.Location = new Point(25, 16);
+            comboBoxSearch.Name = "comboBoxSearch";
+            comboBoxSearch.Size = new Size(207, 33);
+            comboBoxSearch.TabIndex = 0;
             // 
             // Customer
             // 
@@ -275,7 +397,8 @@
             BackColor = Color.FromArgb(192, 255, 192);
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1638, 834);
-            Controls.Add(flowLayoutPanel1);
+            Controls.Add(panel3);
+            Controls.Add(panel2);
             Controls.Add(dataGridView1);
             Controls.Add(panel1);
             Location = new Point(270, 120);
@@ -287,8 +410,9 @@
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
-            flowLayoutPanel1.ResumeLayout(false);
-            flowLayoutPanel1.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel3.ResumeLayout(false);
+            panel3.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -309,8 +433,18 @@
         private Button btnDelete;
         private Panel panel1;
         private DataGridView dataGridView1;
-        private FlowLayoutPanel flowLayoutPanel1;
-        private Label label1;
+        private Label label10;
+        private Label label9;
+        private Label label8;
+        private Label label7;
         private Button btnClear;
+        private Label label11;
+        private Panel panel2;
+        private Panel panel3;
+        private ComboBox comboBoxSearch;
+        private TextBox textBoxSearch;
+        private Button btnSearch;
+        private ComboBox comboBoxStatus;
+        private Button btnReactivate;
     }
 }

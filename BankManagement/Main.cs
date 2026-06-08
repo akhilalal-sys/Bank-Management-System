@@ -15,11 +15,7 @@ namespace BankManagement
             InitializeComponent();
         }
 
-        private void button5_Click(object sender, EventArgs e)
-        {
-            Dashboard dd=new Dashboard();
-            dd.Show();
-        }
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -47,8 +43,14 @@ namespace BankManagement
 
         private void button4_Click(object sender, EventArgs e)
         {
-            Employee em=new Employee();
+            Employee em = new Employee();
             em.Show();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Dashboard db = new Dashboard();
+            db.Show();
         }
     }
 }
