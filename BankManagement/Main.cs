@@ -41,11 +41,11 @@ namespace BankManagement
             ln.Show();
         }
 
-        private void button4_Click(object sender, EventArgs e)
-        {
-            Employee em = new Employee();
-            em.Show();
-        }
+        //private void button4_Click(object sender, EventArgs e)
+        //{
+        //    Employee em = new Employee();
+        //    em.Show();
+        //}
 
         private void button5_Click(object sender, EventArgs e)
         {
